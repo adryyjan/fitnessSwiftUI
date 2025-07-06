@@ -10,44 +10,38 @@ import SwiftUI
 
 
 struct FAHomeView: View {
-    @State var calories: Int = 700
-    @State var active: Int = 1
-    @State var stand: Int = 4
     
     
+    @StateObject var viewModel = FAHomeScreenVM()
     
     var body: some View {
         
         NavigationStack {
+            
             ScrollView(showsIndicators: false) {
                 
                 VStack(alignment: .leading) {
-                    
-                    Text("Welcome to Fitness App!")
-                        .font(.largeTitle)
-                        .padding()
-                    
                     HStack {
                         
                         Spacer()
                         
-                        VStack {
-                            FAStatisticField(title: "Kalorie", value: "124 kcal",color: .red)
+                        VStack(alignment: .leading) {
+                            FAStatisticField(title: "Kalorie", value: "\(viewModel.calories)",color: .red)
                             
-                            FAStatisticField(title: "Aktywny", value: "52 min", color: .green)
+                            FAStatisticField(title: "Aktywny", value: "\(viewModel.active) min", color: .green)
                             
-                            FAStatisticField(title: "Stand", value: "8 godzin", color: .blue)
+                            FAStatisticField(title: "Stand", value: "\(viewModel.stand) godizny", color: .blue)
                             
                         }
                         
                         Spacer()
                         
                         ZStack {
-                            ProgresCircleView(progress: $calories, color: .red, goal: 1600)
+                            ProgresCircleView(progress: $viewModel.calories, color: .red, goal: 1600)
                             
-                            ProgresCircleView(progress: $active, color: .green, goal: 2)
+                            ProgresCircleView(progress: $viewModel.active, color: .green, goal: 2)
                                 .padding(.all, 20)
-                            ProgresCircleView(progress: $stand, color: .blue, goal: 8)
+                            ProgresCircleView(progress: $viewModel.stand, color: .blue, goal: 8)
                                 .padding(.all, 40)
                         }
                         .padding(.horizontal)
@@ -104,14 +98,16 @@ struct FAHomeView: View {
                     .padding(.top)
                     
                     LazyVStack{
-                        ForEach(mockDataWorkout.mockWorkouts) { workout in
+                        ForEach(MockDataWorkout.mockWorkouts) { workout in
                             FAWorkoutCard(workout: workout)
                         }
                     }
                     .padding(.bottom)
                 }
             }
+            .navigationTitle("Fitness App")
         }
+        .navigationTitle("Fitness App")
     }
 }
 

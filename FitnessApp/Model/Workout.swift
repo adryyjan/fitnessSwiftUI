@@ -17,7 +17,7 @@ struct Workout: Identifiable {
     let calories: String
 }
 
-struct mockDataWorkout {
+struct MockDataWorkout {
     static let mockWorkouts = [
         Workout(id: 1, title: "test", image: "figure.run", titntColor: .red, duration: "51 min", date: "Aug 3", calories: "200 kcla"),
         Workout(id: 2, title: "test", image: "figure.run", titntColor: .blue, duration: "31 min", date: "Aug 3", calories: "142 kcla"),
