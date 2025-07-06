@@ -18,66 +18,97 @@ struct FAHomeView: View {
     
     var body: some View {
         
-        ScrollView(showsIndicators: false) {
-            
-            VStack(alignment: .leading) {
+        NavigationStack {
+            ScrollView(showsIndicators: false) {
                 
-                Text("Welcome to Fitness App!")
-                    .font(.largeTitle)
-                    .padding()
-                
-                HStack {
+                VStack(alignment: .leading) {
                     
-                    Spacer()
+                    Text("Welcome to Fitness App!")
+                        .font(.largeTitle)
+                        .padding()
                     
-                    VStack {
-                        FAStatisticField(title: "Kalorie", value: "124 kcal",color: .red)
+                    HStack {
                         
-                        FAStatisticField(title: "Aktywny", value: "52 min", color: .green)
+                        Spacer()
                         
-                        FAStatisticField(title: "Stand", value: "8 godzin", color: .blue)
-   
-                    }
-                    
-                    Spacer()
-                    
-                    ZStack {
-                        ProgresCircleView(progress: $calories, color: .red, goal: 1600)
+                        VStack {
+                            FAStatisticField(title: "Kalorie", value: "124 kcal",color: .red)
                             
-                        ProgresCircleView(progress: $active, color: .green, goal: 2)
-                            .padding(.all, 20)
-                        ProgresCircleView(progress: $stand, color: .blue, goal: 8)
-                            .padding(.all, 40)
+                            FAStatisticField(title: "Aktywny", value: "52 min", color: .green)
+                            
+                            FAStatisticField(title: "Stand", value: "8 godzin", color: .blue)
+                            
+                        }
+                        
+                        Spacer()
+                        
+                        ZStack {
+                            ProgresCircleView(progress: $calories, color: .red, goal: 1600)
+                            
+                            ProgresCircleView(progress: $active, color: .green, goal: 2)
+                                .padding(.all, 20)
+                            ProgresCircleView(progress: $stand, color: .blue, goal: 8)
+                                .padding(.all, 40)
+                        }
+                        .padding(.horizontal)
+                        
+                        Spacer()
+                    }
+                    .padding()
+                    
+                    HStack {
+                        
+                        Text("Fitness activity")
+                            .font(.title2)
+                        
+                        Spacer()
+                        
+                        Button {
+                            print("cloick")
+                        } label: {
+                            Text("Show details")
+                                .padding(.all, 10)
+                                .foregroundStyle(.white)
+                                .background(.blue)
+                                .clipShape(.buttonBorder)
+                        }
                     }
                     .padding(.horizontal)
                     
-                    Spacer()
-                }
-                .padding()
-                
-                HStack {
-                    
-                    Text("Fitness activity")
-                        .font(.title2)
-                    
-                    Spacer()
-                    
-                    Button {
-                        print("cloick")
-                    } label: {
-                        Text("Show details")
-                            .padding(.all, 10)
-                            .foregroundStyle(.white)
-                            .background(.blue)
-                            .clipShape(.buttonBorder)
+                    LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count: 2)) {
+                        ForEach(MockDataActivity.mockActivities) { activity in
+                            FAActivityCard(activity: activity)
+                        }
                     }
-                }
-                .padding(.horizontal)
-                
-                LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count: 2)) {
-                    ForEach(MockData.mockActivities) { activity in
-                        FAActivityCard(activity: activity)
+                    
+                    HStack {
+                        
+                        Text("Ostatnie ćwicznia")
+                            .font(.title2)
+                        
+                        Spacer()
+                        
+                        NavigationLink {
+                            EmptyView()
+                        } label: {
+                            Text("Show details")
+                                .padding(.all, 10)
+                                .foregroundStyle(.white)
+                                .background(.blue)
+                                .clipShape(.buttonBorder)
+                        }
+                        
+                        
                     }
+                    .padding(.horizontal)
+                    .padding(.top)
+                    
+                    LazyVStack{
+                        ForEach(mockDataWorkout.mockWorkouts) { workout in
+                            FAWorkoutCard(workout: workout)
+                        }
+                    }
+                    .padding(.bottom)
                 }
             }
         }

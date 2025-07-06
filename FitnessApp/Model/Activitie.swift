@@ -17,7 +17,7 @@ struct Activity: Identifiable {
     let ammount: String
 }
 
-struct MockData {
+struct MockDataActivity {
     
     static let mockActivities = [
         Activity(id: 1, title: "Todays Steps", subtitle: "Goal 10 000", image: "figure.walk", tintColor: .green, ammount: "8 000"),
