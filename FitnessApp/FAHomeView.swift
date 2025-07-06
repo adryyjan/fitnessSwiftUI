@@ -7,55 +7,41 @@
 
 import SwiftUI
 
+
+
 struct FAHomeView: View {
     @State var calories: Int = 700
     @State var active: Int = 1
     @State var stand: Int = 4
     
+    var mockActivities = [
+        Activity(id: 1, title: "Todays Steps", subtitle: "Goal 10 000", image: "figure.walk", tintColor: .green, ammount: "8 000"),
+        Activity(id: 2, title: "Todays Steps", subtitle: "Goal 10 000", image: "figure.walk", tintColor: .red, ammount: "7 000"),
+        Activity(id: 3, title: "Todays Steps", subtitle: "Goal 10 000", image: "figure.walk", tintColor: .blue, ammount: "6 000"),
+        Activity(id: 4, title: "Todays Steps", subtitle: "Goal 10 000", image: "figure.walk", tintColor: .yellow, ammount: "5 000")
+    ]
+    
     var body: some View {
+        
         ScrollView(showsIndicators: false) {
-            VStack {
+            
+            VStack(alignment: .leading) {
+                
                 Text("Welcome to Fitness App!")
                     .font(.largeTitle)
                     .padding()
+                
                 HStack {
+                    
                     Spacer()
                     
                     VStack {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Kalorie")
-                                .font(.callout)
-                                .bold()
-                                .foregroundStyle(.red)
-                            
-                            Text("123 kcal")
-                                .bold()
-                        }
-                        .padding(.bottom)
+                        FAStatisticField(title: "Kalorie", value: "124 kcal",color: .red)
                         
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("AKtywny")
-                                .font(.callout)
-                                .bold()
-                                .foregroundStyle(.green)
-                            
-                            Text("52 min")
-                                .bold()
-                        }
-                        .padding(.bottom)
+                        FAStatisticField(title: "Aktywny", value: "52 min", color: .green)
                         
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Stand")
-                                .font(.callout)
-                                .bold()
-                                .foregroundStyle(.blue)
-                            
-                            Text("8 godzin")
-                                .bold()
-                        }
-                        .padding(.bottom)
-                        
-                        
+                        FAStatisticField(title: "Stand", value: "8 godzin", color: .blue)
+   
                     }
                     
                     Spacer()
@@ -73,6 +59,33 @@ struct FAHomeView: View {
                     Spacer()
                 }
                 .padding()
+                
+                HStack {
+                    
+                    Text("Fitness activity")
+                        .font(.title2)
+                    
+                    Spacer()
+                    
+                    Button {
+                        print("cloick")
+                    } label: {
+                        Text("Show details")
+                            .padding(.all, 10)
+                            .foregroundStyle(.white)
+                            .background(.blue)
+                            .clipShape(.buttonBorder)
+                    }
+                }
+                .padding(.horizontal)
+                
+                LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count: 2)) {
+                    ForEach(mockActivities) { activity in
+                        FAActivityCard(activity: activity)
+                    }
+                    
+                
+                }
             }
         }
     }
